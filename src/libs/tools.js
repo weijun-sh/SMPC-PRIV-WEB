@@ -2,9 +2,14 @@ import coininfo from '@/assets/js/config/coininfo.js'
 /**
  * @description web3方法及配置
  */
-import web3 from '@/assets/js/web3/index.js'
+import web3 from '@/assets/js/web3'
 
 import {BigNumber} from 'bignumber.js'
+// let BN = web3.utils.BN
+/**
+ * @description 生成随机图片
+ */
+import Identicon from 'identicon.js'
 
 export default {
   fromTime (timestamp) {
@@ -349,4 +354,9 @@ export default {
       eNodeId: obj && obj.key ? obj.key : ''
     }
   },
+  createImg (hex) {
+    let imgData = new Identicon(hex).toString()
+    let imgInfo = 'data:image/png;base64,' + imgData // 这就是头像的base64码
+    return imgInfo
+  }
 }

@@ -1,6 +1,180 @@
 @import './base.scss';
-body{display:block;padding:0;margin:0;}
-*{box-sizing:bor-border;}
-#app, .bg{overflow: hidden;min-width:100%;min-height:100%;min-width:100vw;min-height:100vh;}
-.boxContent{overflow: hidden;width:100%;height:100%;width:100vw;height:100vh;position:relative;}
-.boxConntent1{width:100%;height:100%;position:relative;overflow: auto;}
+// @import './css.scss';
+
+.d-content-view {
+  width: 100%;
+  .h3 {
+    font-size: $text-lg;line-height: size(36);margin-bottom: size(20);
+  }
+}
+
+.c-form-box {
+  width: 600px;margin:30px auto;padding: 30px 25px;border-radius: 6px;
+  .el-form-item {
+    margin-bottom: size(10);
+    .el-form-item__label {
+      line-height: 28px;padding-bottom: 0;
+    }
+  }
+}
+
+.fixed-action-bg {
+  position: fixed;bottom:0;left:0;right: 0;background: rgba(0,0,0,.1);padding: 8px 0;
+  .fixed-action-box {
+    width: 600px;padding: 0 25px;
+  }
+}
+
+.c-form-box-sm {
+  width: 100%;
+  .el-form-item {
+    margin-bottom: size(10);
+    .el-form-item__label {
+      height: size(30);
+    }
+  }
+}
+
+.confirm-list-box {
+  width: 100%;
+  .list-box {
+    width: 100%;
+    .item {
+      padding: size(8) size(0);color: $color-gray;
+      .label {
+        width: 25%;text-align: right;padding-right: size(10);font-weight: bold;white-space: nowrap;
+      }
+      .info {
+        width: 75%;word-break: break-all;
+      }
+    }
+  }
+}
+
+.n-list-box {
+  width: 100%;min-height: 80%;padding: 30px 15px; margin:15px 0;
+  .item {
+    width: 100%;border-bottom: 1px solid #eee;padding:8px 0;font-size: 14px;color: #333;cursor: pointer;
+    .p2{
+      color:#999;
+    }
+  }
+}
+
+.tab-box {
+  .el-tabs__item {
+    color: $color-gray;
+    &.is-active {
+      color: $color-primary;
+    }
+  }
+}
+
+.appTitle {
+  font-size: $text-normal;color:$color-black;font-weight:bold;
+  span {
+    color: $color-primary;margin-right: size(5);
+  }
+}
+.user-form-box {
+  width: size(300);
+  .user-form-title {
+    .logo{
+      height: size(30);
+      img {
+        height: 100%;
+      }
+    }
+    .back {
+      font-size: $text-normal;color: $color-gray;margin: size(20) 0;display: block;
+    }
+    .title {
+      font-size:$text-lg;color: $color-black;font-weight: bold;margin-bottom: size(20);
+    }
+  }
+  .user-form-input {
+    width: 100%;
+    .el-form-item__label {
+      padding-bottom: 0;line-height: size(35);font-size: $text-normal;color: $color-gray;
+    }
+    .btn {
+      width: 100%;height: size(50);font-size: $text-md;font-weight: bold;
+    }
+  }
+}
+
+.btn-primary {
+  background: $color-primary;color: #fff;border: size(1) solid $color-primary;
+  &:hover {
+    background: $color-primary;border: size(1) solid $color-primary;
+  }
+  &:focus {
+    background: $color-primary;border: size(1) solid $color-primary;
+  }
+  &.is-disabled {
+    opacity: .5;
+  }
+}
+
+.el-drawer__header {
+  margin-bottom: size(5);padding: size(15) size(15) 0;
+}
+
+.labelType {
+  width: size(200);height: size(40);position: absolute;top: size(25);left:size(-55);z-index: 3;
+  &.self {
+    border: 1px solid $color-info;color: $color-info;background: rgba(187,227,207,.3);
+  }
+}
+
+.table-box {
+  .el-table thead {
+    th {
+      color: #909399;font-weight: bold;
+    }
+  }
+  .el-table__expanded-cell {
+    padding: 20px 20px;
+  }
+}
+
+.tables-expand {
+  $left: size(150);
+  .el-form-item {
+    margin-right: 0; margin-bottom: 0; width: 100%;position: relative;padding-left: $left;
+    label {
+      width: $left; color: #99a9bf;position: absolute;left: 0;top: 0;text-align: right;white-space: nowrap;font-size:12px;line-height: 35px;
+    }
+    .el-form-item__content {
+      width: 100%;line-height: 35px; font-size: $text-normal;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;font-size:12px;
+    }
+  }
+}
+.table-list {
+  width: 100%;
+  .item {
+    width: 100%;position: relative;
+  }
+}
+
+// 夜间模式
+.night {
+  .appTitle {
+    color: #fff;
+  }
+  .user-form-box {
+    .user-form-title {
+      .back, .title  {
+        color: #fff;
+      }
+    }
+    .user-form-input {
+      .el-form-item__label {
+        color: #999;
+      }
+      .btn {
+        background: $color-primary;border-color: $color-primary;
+      }
+    }
+  }
+}

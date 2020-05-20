@@ -1,0 +1,63 @@
+body{display:block;padding:0;margin:0;}
+*{box-sizing:bor-border;}
+#app, .bg{overflow: hidden;min-width:100%;min-height:100%;min-width:100vw;min-height:100vh;}
+.boxContent{overflow: hidden;width:100%;height:100%;width:100vw;height:100vh;position:relative;}
+.boxConntent1{width:100%;height:100%;position:relative;overflow: auto;}
+
+
+.supCoinView_container{width:970px;margin: auto;background:#eee;}
+
+.qrcodeCont_box{padding:0px;}
+.qrcodeCont_title{text-align:center;font-size:16px;margin-top:20px;}
+
+.register_box {
+  width: 600px;background: rgba(0, 0, 0, .8);
+}
+.register_title {
+  width: 100%;color: #fff;font-size: 24px;padding: 30px 0;border-bottom: 1px solid #fff;font-weight: bold;
+}
+
+.backupInfo_box{padding:0 0 63px;}
+.backupInfo_top{padding:0 48px 50px;border-bottom:5px solid #eee;}
+.qrcodeView_box{width:100%;padding-top:15px;}
+.qrcodeView_box ul{overflow: hidden;}
+.qrcodeView_box ul li{width:50%;float: left;}
+.qrcodeView_cont{width:300px;height:320px;border:1px solid #ddd;margin:auto;padding:0 15px;position: relative;}
+.qrcodeView_cont .title{font-size: 16px;line-height:24px;color:#333;text-align:center;margin:8px auto;}
+.qrcodeView_black{width:300px;height:280px;background:#000;position: absolute;left:0px;bottom:0;z-index: 2;display:block;}
+.qrcodeView_eyes{width:55px;height:38px;position: absolute;bottom:0px;right:-55px;border:1px solid #ddd;padding:10px 15px;}
+.qrcodeView_eyes img{max-width: 100%;max-height: 100%;}
+
+.downTipBox{position:relative;}
+.downTipBox .tip{padding:5px 8px;background:#000;color:#fff;position:absolute;top:28px;left:50%;font-size:12px;border-radius:5px;margin-left:-20px;display: none}
+.downTipBox .tip::after{content: '';width:0;height:0;display:block;border-bottom:8px solid #000;border-left:4px solid transparent;border-right:4px solid transparent;position:absolute;top:-8px;left:50%;margin-left:-4px;}
+.downTipBox:hover .tip{display:block;}
+
+/* .inputOpacity{width:0;height:0;opacity: 0;} */
+
+.pwdSure_box{width:100%;}
+/* .pwdSure_box .selectType_type{width:30%;} */
+.pwdSure_box .selectType_content{width:100%;border-left:none;}
+
+.sendInfo_box{width:100%;}
+.sendInfo_box ul li{width:100%;overflow: hidden;}
+.sendInfo_box ul li h3{width:30%;float: left;text-align:right;padding:5px 5px;font-weight: bold;}
+.sendInfo_box ul li span{width:70%;float: left;padding:5px 5px;word-break: break-all;}
+
+.customTxn_box {border-bottom: 1px solid #ddd;padding-bottom:15px;}
+.customTxn_box .el-form-item__label {padding: 0;}
+.customTxn_box .el-form-item {margin: 0!important;}
+
+.confirmPage{width: 100%;height: 100%;color:#999;}
+
+.isErc20 {position:absolute;top:-5px;right: 0;font-size: 10px;color:#fff;font-style: italic;padding:0 5px;background: #004a7c;border-radius: 5px;transform: scale(0.6);}
+.isErc20_1{top: 0px;}
+
+/* .mzindex, .el-select-dropdown.el-popper {z-index: 3009!important} */
+.el-badge__content.is-fixed{ top: -3px;right: 0;}
+.el-drawer {overflow: auto;}
+.el-drawer__header {height: 40px;display: none;}
+
+.el-table, .el-table__expanded-cell, .el-table th, .el-table tr, .el-table td, .el-table th.is-leaf {
+  background: none;color: #999;
+}

@@ -1,66 +1,46 @@
 import Vue from 'vue'
-import App from './App.vue'
+import axios from 'axios'
+import Vuex from 'vuex'
+import App from './App'
+import router from './router'
+import store from './store'
+
+import i18n from '@/local'
+import $$ from '@/libs/index'
 
 import 'element-ui/lib/theme-chalk/index.css'
-import '@/assets/css/css.css'
+import './assets/css/css.css'
+import './assets/css/style.css'
 
-import $$ from '@/libs/index'
-Vue.prototype.$$ = $$
 
-import { 
-  Button,
-  Select,
-  Option,
-  Row,
-  Col,
-  Tabs,
-  TabPane,
-  Form,
-  FormItem,
-  Loading,
-  MessageBox,
-  Message,
-  Dialog,
-  Radio,
-  RadioGroup,
-  RadioButton,
-  Table,
-  TableColumn,
-  Switch,
-  Input,
-  DatePicker,
-  TimeSelect,
-  TimePicker,
-  Popover,
-  Tooltip,
-} from 'element-ui'
-Vue.use(Button)
-Vue.use(Select)
-Vue.use(Option)
-Vue.use(Row)
-Vue.use(Col)
-Vue.use(Tabs)
-Vue.use(TabPane)
-Vue.use(Form)
-Vue.use(FormItem)
-Vue.use(Loading)
-Vue.use(Dialog)
-Vue.use(Radio)
-Vue.use(RadioGroup)
-Vue.use(RadioButton)
-Vue.use(Table)
-Vue.use(TableColumn)
-Vue.use(Switch)
-Vue.use(Input)
-Vue.use(DatePicker)
-Vue.use(TimeSelect)
-Vue.use(TimePicker)
-Vue.use(Popover)
-Vue.use(Tooltip)
-Vue.prototype.$msgbox = MessageBox
-Vue.prototype.$message = Message
+
+import ElementUI from 'element-ui'
+Vue.use(ElementUI)
+
+Vue.use(Vuex)
+
+import VueSocketIO from 'vue-socket.io'
+let vueSocketIo = new VueSocketIO({
+  debug: false,
+  connection: $$.config.appURL,
+})
+// 监听connect事件，设置SOCKET_CONNECT为true
+vueSocketIo.io.on('connect', () => {
+  store.commit('SOCKET_CONNECT', true)
+})
+Vue.use(vueSocketIo)
 
 Vue.config.productionTip = false
+
+Vue.prototype.$$ = $$
+Vue.prototype.$axios = axios
+
+import db from '@/db/index.js'
+Vue.prototype.$db = db
+
+Vue.prototype.toUrl = function(url, params) {
+  this.$router.push({path: url, query: params})
+}
 
 Vue.prototype.copyTxt = function(cont) {
   let id = 'copyInputSelectContent'
@@ -111,6 +91,24 @@ Vue.prototype.msgWarning = function(txt) {
   })
 }
 
+Vue.prototype.quitApp = function() {
+  // $$.clearCookies()
+  this.$store.commit('setToken', '')
+  this.$store.commit('setAddress', '')
+  this.$router.push('/')
+}
+
+import pwdSure from '@/components/pwdSure/index.vue'
+import logo from '@/components/logo/index'
+import drawerLogo from '@/components/logo/drawerLogo'
+Vue.component('pwdSure', pwdSure)
+Vue.component('logo', logo)
+Vue.component('drawerLogo', drawerLogo)
+
+
 new Vue({
+  router,
+  store,
+  i18n,
   render: h => h(App),
 }).$mount('#app')

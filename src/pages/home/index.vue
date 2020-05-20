@@ -1,5 +1,5 @@
 <template>
-  <div class="boxContent flex-c" v-loading="loading.init" element-loading-text="Loading...">
+  <div class="boxContent1 pt-50" v-loading.fullscreen.lock="loading.init" element-loading-text="Loading...">
     <div class="action-box">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="Sign" name="sign">
@@ -36,16 +36,19 @@
               <el-button @click="resetData">Reset</el-button>
             </el-form>
           </el-form>
-          <div class="mt-30 flex-bc" v-if="signHash">
-            <el-input type="text" v-model="signHash"></el-input>
-            <el-button type="primary" @click="copyTxt(signHash)" class="ml-10">Copy Hash</el-button>
+          <div class="mt-30" v-if="signData">
+            <div class="flex-bc">
+              <el-input type="textarea" v-model="signData" :rows="9"></el-input>
+              <div id="signQRcode" class="ml-10"></div>
+            </div>
+            <el-button type="primary" @click="copyTxt(signData)" class="mt-10">Copy Hash</el-button>
           </div>
         </el-tab-pane>
         <el-tab-pane label="Send Transaction" name="send">
-          <el-form label-position="top" label-width="80px" :model="signData">
+          <el-form label-position="top" label-width="80px" :model="sendData">
             <el-form-item>
               <span slot="label"><i class="color_red mr-5">*</i>SignTx:</span>
-              <el-input type="textarea" v-model="signData.sign" :rows="8"></el-input>
+              <el-input type="textarea" v-model="sendData.sign" :rows="8"></el-input>
             </el-form-item>
             <el-form class="mt-20">
               <el-button type="primary" @click="sendTxns">Send Transaction</el-button>
@@ -60,7 +63,7 @@
 
 <style lang="scss">
 .action-box {
-  width: 100%;max-width: size(600);min-height: size(600);overflow:auto;
+  width: 100%;max-width: size(600);overflow:auto;margin:auto;
   .el-form-item {
     margin-bottom: size(10);
     .el-form-item__label {
@@ -78,14 +81,16 @@ export default {
     return {
       activeName: 'sign',
       txData: {
-        from: 'mzEh4n6syEvTYXEWRdSzbyXJMThfJqCfH6',
-        pubKey: '046725b0e28b6f1f597fbd642f556b3e1f603826ceb6acfb0e981bd51ee65c8e312e2d4b2dc6986e18fb7309c6971fdde1f300d799d237f10ba9b93b41ce03a829',
-        to: 'myyBxePvJGtu8Uh63K7D78XVoSCMtMfmaL',
+        from: '0x3C93897270F5E42D08f08e2ac02BE2a21D544AAB',
+        pubKey: '04cd0a27dadecd6d3dcb80e52bee3dcf5eaa39dc3e37eb9590c3f4601e757003aae0be85d40dc87e3a2a42ab9586dd06002a1a61b28f7be500d2d0fcba6941b108',
+        to: '0x76c2ae4281fe1ee1a79ccbdda2516d4d7eb0eb37',
         value: '0.00001',
         data: '',
-        coinType: 'BTC'
+        coinType: 'FSN',
+        hash: ''
       },
-      signData: {},
+      signData: '',
+      sendData: {},
       allCoins: [
         { coinType: 'BTC', address: '', balance: '', isOpen: 1},
         { coinType: 'ETH', address: '', balance: '', isOpen: 1},
@@ -96,11 +101,14 @@ export default {
       loading: {
         init: false
       },
-      signHash: '',
     }
   },
   mounted () {
-    // console.log(web3)
+    // let str = JSON.stringify(this.txData)
+    // let hash = web3.utils.utf8ToHex(str)
+    // console.log(hash)
+    // let str1 = web3.utils.hexToUtf8(hash)
+    // console.log(str1)
   },
   methods: {
     init () {
@@ -123,9 +131,17 @@ export default {
         console.log(res)
         console.log(JSON.parse(res.Data.result.Tx))
         if (res.Status === 'Success') {
-          this.signHash = res.Data.result.TxHash[0]
+          this.txData.hash = res.Data.result.TxHash[0]
+          let str = JSON.stringify(this.txData)
+          console.log(str.length)
+          this.signData = web3.utils.utf8ToHex(str)
+          // this.signData = str
+          console.log(this.signData.length)
+          this.$nextTick(() => {
+            this.$$.qrCode(this.signData, 'signQRcode')
+          })
         } else {
-          this.signHash = ''
+          this.signData = this.txData.hash = ''
           this.msgError(res.Tip)
         }
         this.loading.init = false
@@ -136,7 +152,7 @@ export default {
     },
     sendTxns () {
       this.loading.init = true
-      web3.dcrm.lockOut(this.signData.sign).then(res => {
+      web3.dcrm.lockOut(this.sendData.sign).then(res => {
         cbData = res
         // console.log(cbData)
         if (cbData.Status !== 'Error') {
@@ -154,7 +170,7 @@ export default {
       if (this.activeName === 'sign') {
         this.txData = {}
       } else {
-        this.signData = {}
+        this.sendData = {}
       }
     }
   }

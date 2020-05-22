@@ -7,7 +7,7 @@ import config from '@/assets/js/config/base.js'
 /**
  * @description web3文件
  */
-import web3 from '@/libs/web3Util'
+// import web3 from '@/libs/web3Util'
 /**
  * @description 基本信息设置
  */
@@ -29,7 +29,8 @@ const store = new Vuex.Store({
     approvalObj: {},
     keystore: '',
     email: '',
-    connect: ''
+    connect: '',
+    pubKeyArr: []
   },
   mutations: {
     setEnode (state, data) {
@@ -116,7 +117,10 @@ const store = new Vuex.Store({
     SOCKET_CONNECT(state, data) {
       // console.log(data)
       state.connect = data
-    }
+    },
+    setPubKeyArr (state, data) {
+      state.pubKeyArr = data
+    },
   },
   actions: {
     getAccountType ({commit}) {

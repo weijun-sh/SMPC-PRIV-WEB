@@ -145,23 +145,23 @@ export default [
         },
       ]
     },
-  {
-    path: '/sendTxns',
-    component: Main,
-    meta: {
-      notCache: true
-    },
-    children: [
-      {
-        path: '/',
-        meta: {
-          title: '交易',
-          notCache: true
-        },
-        component: resolve => require.ensure([], () => resolve(require('@/pages/txns/index.vue')) )
-      }
-    ]
-  },
+  // {
+  //   path: '/sendTxns',
+  //   component: Main,
+  //   meta: {
+  //     notCache: true
+  //   },
+  //   children: [
+  //     {
+  //       path: '/',
+  //       meta: {
+  //         title: '交易',
+  //         notCache: true
+  //       },
+  //       component: resolve => require.ensure([], () => resolve(require('@/pages/txns/index.vue')) )
+  //     }
+  //   ]
+  // },
   {
     path: '/history',
     component: Main,
@@ -193,6 +193,23 @@ export default [
           notCache: true
         },
         component: resolve => require.ensure([], () => resolve(require('@/pages/txns/tValid.vue')) )
+      }
+    ]
+  },
+  {
+    path: '/sendTxns',
+    component: Main,
+    meta: {
+      notCache: true
+    },
+    children: [
+      {
+        path: '/',
+        meta: {
+          title: '发送交易',
+          notCache: true
+        },
+        component: resolve => require.ensure([], () => resolve(require('@/pages/txns/sendTxns.vue')) )
       }
     ]
   },

@@ -155,30 +155,45 @@ export default {
   },
   methods: {
     init () {
-      let arr = [
-        { p1: 'dcrm', p2: 'getAccounts', p3: [this.address, '0'] },
-        { p1: 'dcrm', p2: 'getAccounts', p3: [this.address, '1'] },
-      ]
-      this.$$.batchRequest(arr).then(res => {
-        // console.log(res)
-        let groupArr = this.formatAccont(res[0], 0)
-        let personArr = this.formatAccont(res[1], 1)
-        let allArr = [...groupArr, ...personArr]
-        // console.log(allArr)
-        allArr = allArr.sort(this.$$.bigToSmallSort('timestamp'))
-        for (let i = 0, len = allArr.length; i < len; i++) {
-          this.gAccountList.push(allArr[i])
-          this.getGName(allArr[i], i)
-        }
-        if (this.$route.query.gID) {
-          this.changeGroup(this.$route.query)
-        } else if (this.gAccountList.length > 0) {
-          this.changeGroup(this.gAccountList[0])
-        } else {
-          this.changeGroup()
-        }
-        this.loading.list = false
-      })
+      // let arr = [
+      //   { p1: 'dcrm', p2: 'getAccounts', p3: [this.address, '0'] },
+      //   { p1: 'dcrm', p2: 'getAccounts', p3: [this.address, '1'] },
+      // ]
+      // this.$$.batchRequest(arr).then(res => {
+      //   // console.log(res)
+      //   let groupArr = this.formatAccont(res[0], 0)
+      //   let personArr = this.formatAccont(res[1], 1)
+      //   let allArr = [...groupArr, ...personArr]
+      //   // console.log(allArr)
+      //   allArr = allArr.sort(this.$$.bigToSmallSort('timestamp'))
+      //   for (let i = 0, len = allArr.length; i < len; i++) {
+      //     this.gAccountList.push(allArr[i])
+      //     this.getGName(allArr[i], i)
+      //   }
+      //   if (this.$route.query.gID) {
+      //     this.changeGroup(this.$route.query)
+      //   } else if (this.gAccountList.length > 0) {
+      //     this.changeGroup(this.gAccountList[0])
+      //   } else {
+      //     this.changeGroup()
+      //   }
+      //   this.loading.list = false
+      // })
+      this.gAccountList = []
+      // this.gAccountList = this.$store.state.pubKeyArr
+      for (let obj of this.$store.state.pubKeyArr) {
+        obj.img = this.$$.createImg(obj.publicKey)
+        this.gAccountList.push(obj)
+      }
+      console.log(this.gAccountList)
+      if (this.$route.query.gID) {
+        this.changeGroup(this.$route.query)
+      } else if (this.gAccountList.length > 0) {
+        this.changeGroup(this.gAccountList[0])
+      } else {
+        this.changeGroup()
+      }
+      this.loading.list = false
     },
     formatAccont (res, type) {
       let arr = [], arr1 = [], arr2 = []

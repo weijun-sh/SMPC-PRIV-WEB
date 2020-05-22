@@ -152,8 +152,13 @@ export default {
           console.log(data)
           if (data) {
             if (data.account && data.account.ks && this.$$.walletRequirePass(data.account.ks)) {
-              this.accountData = data
-              this.eDialog.import = true
+              // this.accountData = data
+              // this.eDialog.import = true
+              this.$store.commit('setAddress', {info: data.account.address})
+              this.$store.commit('setToken', {info: data.account.username})
+              this.$store.commit('setPubKeyArr', data.pubKey)
+              this.$store.commit('setKeystore', data.account.ks)
+               this.$router.push('/account')
             } else {
               this.msgError(this.$t('error').err_11)
             }

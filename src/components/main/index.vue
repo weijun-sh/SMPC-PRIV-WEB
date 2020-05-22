@@ -19,6 +19,12 @@
               @click="toUrl('/account')"
               :title="$t('title').assets"
             >{{$t('title').assets}}</li>
+            <li
+              class="item flex-c"
+              :class="newsActive === 'sendTxns' ? 'active' : ''"
+              @click="toUrl('/sendTxns')"
+              :title="$t('title').sendTxns"
+            >{{$t('title').sendTxns}}</li>
             <!-- <li
               class="item flex-c"
               :class="newsActive === 'social' ? 'active' : ''"
@@ -36,7 +42,7 @@
               :class="newsActive === 'dapp' ? 'active' : ''"
               @click="toUrl('/dapp')"
               :title="$t('title').dapp"
-            >{{$t('title').dapp}}</li> -->
+            >{{$t('title').dapp}}</li>
             <li
               class="item flex-c"
               :class="newsActive === 'approvalList' ? 'active' : ''"
@@ -52,7 +58,7 @@
               :class="newsActive === 'history' ? 'active' : ''"
               @click="toUrl('/history')"
               :title="$t('btn').history"
-            >{{$t('title').history}}</li>
+            >{{$t('title').history}}</li> -->
           </ul>
         </div>
       </div>
@@ -186,10 +192,10 @@ export default {
     // console.log(this.$route)
     this.newsView(this.$route)
     this.getHeaderImg()
-    setTimeout(() => {
-      this.getAllApprovalData()
-      this.intervalNews()
-    }, 500)
+    // setTimeout(() => {
+    //   this.getAllApprovalData()
+    //   this.intervalNews()
+    // }, 500)
   },
   methods: {
     ...approvalMethods,
@@ -233,6 +239,8 @@ export default {
         this.newsActive = 'account'
       } else if (cur.path.indexOf('dapp') !== -1) {
         this.newsActive = 'dapp'
+      } else if (cur.path.indexOf('sendTxns') !== -1) {
+        this.newsActive = 'sendTxns'
       } else {
         this.newsActive = 0
       }

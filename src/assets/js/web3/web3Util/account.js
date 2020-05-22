@@ -73,4 +73,27 @@ export default {
       })
     })
   },
+  async getAddr (pubk, coinType) {
+    let data = {msg: '', info: ''}
+    return new Promise(resolve => {
+      let cbData = ''
+      web3.coins.getAddr(pubk, coinType).then(res => {
+        cbData = res.Data.result
+        console.log(res.Data.result)
+        if (typeof res.Data.result === 'string') {
+          cbData = JSON.parse(res.Data.result)
+        }
+        if (cbData.Status !== 'Error') {
+          data = {msg: 'Success', info: cbData}
+        } else {
+          data = {msg: 'Success', info: []}
+        }
+        resolve(data)
+      }).catch(err => {
+        console.log(err)
+        data = {msg: 'Error', error: err.toString()}
+        resolve(data)
+      })
+    })
+  },
 }

@@ -296,7 +296,7 @@ export default {
         this.pubKey = this.$route.query.publicKey ? this.$route.query.publicKey : ''
         this.gMode = this.$route.query.mode ? this.$route.query.mode : ''
         this.getAccounts()
-        this.getGroupData()
+        // this.getGroupData()
       } else {
         // console.log(2)
         this.gID = ''
@@ -372,27 +372,47 @@ export default {
       }
       // console.log(this.pubKey)
       if (this.pubKey) {
-        this.$$.getAccountsBalance(this.pubKey, this.address).then(res => {
-          // console.log(res)
+        console.log(this.$$.web3)
+        this.$$.getAddr(this.pubKey, 'ALL').then(res => {
+          console.log(res)
           if (res.msg === 'Success') {
-            for (let obj of res.info) {
-              this.tableObj[obj.Cointype] = {
-                address: obj.DcrmAddr,
-                balance: obj.Balance
+            let addrObj = res.info.DcrmAddress
+            for (let obj in res.info.DcrmAddress) {
+              this.tableObj[obj] = {
+                address: addrObj[obj],
+                balance: 0
               }
             }
             this.tableRefresh = false
             this.$nextTick(() => {
               this.tableRefresh = true
             })
+            console.log(this.tableData)
             // this.tableData = res.info
           }
           this.loading.account = false
-        }).catch(err => {
-          console.log(err)
-          this.msgError(this.$t('warn').w_2)
-          this.loading.account = false
         })
+        // this.$$.getAccountsBalance(this.pubKey, this.address).then(res => {
+        //   // console.log(res)
+        //   if (res.msg === 'Success') {
+        //     for (let obj of res.info) {
+        //       this.tableObj[obj.Cointype] = {
+        //         address: obj.DcrmAddr,
+        //         balance: obj.Balance
+        //       }
+        //     }
+        //     this.tableRefresh = false
+        //     this.$nextTick(() => {
+        //       this.tableRefresh = true
+        //     })
+        //     // this.tableData = res.info
+        //   }
+        //   this.loading.account = false
+        // }).catch(err => {
+        //   console.log(err)
+        //   this.msgError(this.$t('warn').w_2)
+        //   this.loading.account = false
+        // })
       } else {
         this.loading.account = false
       }
@@ -429,16 +449,19 @@ export default {
         dcrmAddr: address,
         coinType: item.coinType,
         gID: this.gID,
-        mode: this.gMode
+        mode: this.gMode,
+        pubKey: this.pubKey
       }
     },
     openSendDialog (index, item) {
       this.setTxnsData(item)
       this.gMemberSelect = []
-      this.loading.nodeSelect = true
+      // this.loading.nodeSelect = true
 
-      this.drawer.select = true
-      this.setMemberList()
+      this.drawer.send = true
+
+      // this.drawer.select = true
+      // this.setMemberList()
       // if (!Number(this.accountType)) {
       //   this.loading.nodeSelect = true
       //   this.drawer.select = true

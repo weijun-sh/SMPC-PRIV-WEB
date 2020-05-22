@@ -9,7 +9,7 @@ import coininfo from '@/assets/js/config/coininfo.js'
 /**
  * @description web3方法及配置
  */
-import web3 from '@/assets/js/web3'
+import web3 from '@/assets/js/web3/index.js'
 /**
  * @description 钱包方法
  */
@@ -26,7 +26,7 @@ import qrCode from '@/libs/qrCode'
 /**
  * @description web3新增通用方法
  */
-import web3Util from '@/libs/web3Util'
+import web3Util from '@/assets/js/web3/web3Util/index.js'
 /**
  * @description mode基本选项
  */

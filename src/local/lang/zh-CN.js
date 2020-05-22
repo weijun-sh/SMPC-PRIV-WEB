@@ -125,7 +125,8 @@ export default {
 		network: '网络',
 		dapp: '应用',
 		bestApply: '精选应用',
-		CrossChainTitle: 'CrossChain-Bridge(去中心化跨链桥）'
+		CrossChainTitle: 'CrossChain-Bridge(去中心化跨链桥）',
+		sendTxns: '发送交易'
 	},
 	label: {
 		username: '用户名',

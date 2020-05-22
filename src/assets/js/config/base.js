@@ -13,7 +13,7 @@ let publicSet = {
   /**
    * @description 区块节点请求地址
    */
-  serverRPC: 'http://47.56.150.104:8087',
+  serverRPC: 'http://47.92.168.85:7117',
   /**
    * @description 通过地址查询外部交易历史
    */

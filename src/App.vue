@@ -33,11 +33,11 @@ export default {
   },
   sockets: {
     connect () {
-      // console.log("connect")
+      console.log("connect")
       this.$store.commit('SOCKET_CONNECT', true)
     },
     disconnect () {
-      // console.log("disconnect")
+      console.log("disconnect")
       this.$store.commit('SOCKET_CONNECT', false)
     }
   },

@@ -78,20 +78,27 @@ export default {
   computed: {
     ...computedPub
   },
+  // sockets: {
+  //   PrivateAccountsAdd (res) {
+  //     console.log(res)
+  //     if (res.msg === 'Success') {
+  //       this.msgSuccess('Success')
+  //     } else {
+  //       if (res.error === 'Repeat') {
+  //         this.eDialog.changeName = true
+  //       } else {
+  //         this.msgError(res.error)
+  //       }
+  //     }
+  //   }
+  // },
   sockets: {
     PrivateAccountsAdd (res) {
       console.log(res)
-      if (res.msg === 'Success') {
-        this.msgSuccess('Success')
-        this.eDialog.changeName = false
-      } else {
-        if (res.error === 'Repeat') {
-          this.eDialog.changeName = true
-        } else {
-          this.msgError(res.error)
-        }
-      }
-    }
+    },
+    getNodeInfos  (res) {
+      console.log(res)
+    },
   },
   mounted () {
     // console.log(this.$db)
@@ -99,6 +106,9 @@ export default {
     // this.$axios.post(url).then(res => {
     //   console.log(res)
     // })
+    setTimeout(() => {
+      this.$socket.emit('getNodeInfos')
+    }, 1500)
   },
   methods: {
     modalClick () {
@@ -122,39 +132,39 @@ export default {
         this.msgError(this.$t('error').err_1)
       }
     },
-    // importAccount () {
-    //   let account = this.accountData.account
-    //   // console.log(account)
-    //   this.$db.findAccount({$or: [{address: account.address}, {username: account.username}]}).then(list => {
-    //     // console.log(list)
-    //     if (list.length <= 0) {
-    //       this.$db.insertAccount({
-    //         username: account.username,
-    //         address: account.address,
-    //         ks: account.ks,
-    //         timestamp: account.timestamp,
-    //       }).then(res => {
-    //         console.log(res)
-    //         this.msgSuccess(this.$t('success').s_7)
-    //         this.modalClick()
-    //       }).catch(err => {
-    //         console.log(err.toString())
-    //         this.msgError(err)
-    //         this.modalClick()
-    //       })
-    //     } else {
-    //       this.eDialog.import = false
-    //       this.eDialog.changeName = true
-    //       // this.msgError(this.$t('error').err_7)
-    //       // this.modalClick()
-    //     }
-    //   }).catch(err => {
-    //     console.log(err)
-    //     // this.msgError(err.toString())
-    //     this.msgError(this.$t('error').err_7)
-    //     this.modalClick()
-    //   })
-    // },
+    importAccount () {
+      let account = this.accountData.account
+      // console.log(account)
+      this.$db.findAccount({$or: [{address: account.address}, {username: account.username}]}).then(list => {
+        // console.log(list)
+        if (list.length <= 0) {
+          this.$db.insertAccount({
+            username: account.username,
+            address: account.address,
+            ks: account.ks,
+            timestamp: account.timestamp,
+          }).then(res => {
+            console.log(res)
+            this.msgSuccess(this.$t('success').s_7)
+            this.modalClick()
+          }).catch(err => {
+            console.log(err.toString())
+            this.msgError(err)
+            this.modalClick()
+          })
+        } else {
+          this.eDialog.import = false
+          this.eDialog.changeName = true
+          // this.msgError(this.$t('error').err_7)
+          // this.modalClick()
+        }
+      }).catch(err => {
+        console.log(err)
+        // this.msgError(err.toString())
+        this.msgError(this.$t('error').err_7)
+        this.modalClick()
+      })
+    },
     fileUpChange (event) {
       let reader = new FileReader()
       let fileUpload = document.getElementById("fileUpload")
@@ -174,8 +184,17 @@ export default {
               // this.$store.commit('setPubKeyArr', data.pubKey)
               // this.$store.commit('setKeystore', data.account.ks)
               // this.$router.push('/account')
-              this.accountData = data
-              this.importAccount()
+              let dataObj = {
+                username: data.account.username,
+                address: data.account.address,
+                ks: data.account.ks,
+                pubKeyArr: data.pubKey
+              }
+              console.log(dataObj)
+              setTimeout(() => {
+                this.$socket.emit('PrivateAccountsAdd', dataObj)
+              }, 1000)
+              // console.log(fileUpload.value)
               fileUpload.value = ''
             } else {
               this.msgError(this.$t('error').err_11)
@@ -190,16 +209,6 @@ export default {
       }
       reader.readAsText(event.target.files[0])
     },
-    importAccount () {
-      let dataObj = {
-        username: this.accountData.account.username,
-        address: this.accountData.account.address,
-        ks: this.accountData.account.ks,
-        pubKeyArr: this.accountData.pubKey
-      }
-      console.log(dataObj)
-      this.$socket.emit('PrivateAccountsAdd', dataObj)
-    }
   }
 }
 </script>

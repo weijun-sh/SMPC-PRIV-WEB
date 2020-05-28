@@ -10,7 +10,7 @@
       <div class="user-form-input c-form-box-sm">
         <div class="WW100" style="margin:auto;">
           <el-form ref="userInfoForm" :model="loginObj" :rules="rules" label-width="120px" label-position="top" @submit.native.prevent>
-            <el-form-item>
+            <!-- <el-form-item>
               <div slot="label" class="flex-sc">
                 <span class="color_red">* </span>
                 {{$t('btn').setNode}}
@@ -29,7 +29,7 @@
                   </div>
                 </el-option>
               </el-select>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item :label="$t('label').username" prop="username">
               <el-input v-model="loginObj.username" @input="validInfo('username')"></el-input>
             </el-form-item>
@@ -94,11 +94,11 @@ export default {
   },
   sockets: {
     ...nodeSockets,
-    GetUserAccount (res) {
+    PrivateAccountsFind (res) {
       console.log(res)
       if (res.msg === 'Success' && res.info && res.info.ks) {
         this.$store.commit('setEmail', res.info.email ? res.info.email : '')
-        this.unlock(res.info.ks)
+        this.unlock(res.info.ks, res.info.pubKeyArr)
       } else {
         this.msgError(this.$t('error').err_8)
         this.loading.wait = false
@@ -106,8 +106,8 @@ export default {
     }
   },
   mounted () {
-    this.getNetUrl()
-    this.setSelected()
+    // this.getNetUrl()
+    // this.setSelected()
   },
   methods: {
     ...nodeMethods,
@@ -135,7 +135,8 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.loading.wait = true
-          this.setNet()
+          // this.setNet()
+          this.inputFileBtn()
         } else {
           console.log('error submit!!')
           return false;
@@ -172,15 +173,16 @@ export default {
     inputFileBtn () {
       let data = {
         username: this.loginObj.username,
-        password: this.cutPwd(this.loginObj.username, this.loginObj.password),
+        // password: this.cutPwd(this.loginObj.username, this.loginObj.password),
       }
-      this.$socket.emit('GetUserAccount', data)
+      this.$socket.emit('PrivateAccountsFind', data)
     },
     cutPwd (name, pwd) {
       pwd = pwd.toString()
       return pwd.substr(0,1) + name + pwd.substr(pwd.length - 2, 1)
     },
-    unlock (keystore) {
+    unlock (keystore, pubKeyArr) {
+      console.log(keystore)
       try {
         if (this.$$.walletRequirePass(keystore)) {
           const walletInfo = this.$$.getWalletFromPrivKeyFile(
@@ -189,14 +191,10 @@ export default {
           )
           let address = walletInfo.getChecksumAddressString()
           let pwd = walletInfo.getPrivateKeyString()
-          if (!this.eNode) {
-            this.msgError(this.$t('error').err_10)
-            return
-          }
-          this.signEnode(pwd, address)
           this.$store.commit('setAddress', {info: address})
           this.$store.commit('setToken', {info: this.loginObj.username})
           this.$store.commit('setKeystore', keystore)
+          this.$store.commit('setPubKeyArr', pubKeyArr)
           this.$router.push('/account')
         } else {
           this.msgError('Error')

@@ -2,7 +2,7 @@
   <div class="boxConntent1" v-loading="loading.account" :element-loading-text="$t('loading').l_1">
     <div class="flex-bc a-header-box">
       <div></div>
-      <div @click="gID ? drawer.member = true : ''"><i class="el-icon-menu cursorP"></i></div>
+      <!-- <div @click="gID ? drawer.member = true : ''"><i class="el-icon-menu cursorP"></i></div> -->
     </div>
 
     <div class="a-table-box" v-if="tableData.length > 0">

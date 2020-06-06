@@ -60,6 +60,11 @@ export default {
               console.log(cbData)
               this.$$.web3.coins.submitTransaction(cbData, dataObj.coinType).then(res1 => {
                 console.log(res1)
+                if (res1.Status === 'Success') {
+                  this.msgSuccess('Success')
+                } else {
+                  this.msgError(res1.Error)
+                }
               })
             }
           }

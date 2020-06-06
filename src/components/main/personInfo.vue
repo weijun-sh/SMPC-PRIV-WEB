@@ -6,13 +6,13 @@
     </div> -->
     <ul class="user-list">
       <!-- <li class="item flex-sc" @click="createAccount" :title="$t('btn').createAccount"><i class="el-icon-plus icon"></i>{{$t('btn').createAccount}}</li> -->
-      <li class="item flex-sc" v-if="$$.config.accountSwitch.person" @click="changeMode('1')" :title="$t('btn').createPersson"><i class="el-icon-user icon"></i>{{$t('btn').createPersson}}</li>
-      <li class="item flex-sc" @click="changeMode('0')" :title="$t('btn').createGroup"><i class="el-icon-money icon"></i>{{$t('btn').createGroup}}</li>
+      <!-- <li class="item flex-sc" v-if="$$.config.accountSwitch.person" @click="changeMode('1')" :title="$t('btn').createPersson"><i class="el-icon-user icon"></i>{{$t('btn').createPersson}}</li> -->
+      <!-- <li class="item flex-sc" @click="changeMode('0')" :title="$t('btn').createGroup"><i class="el-icon-money icon"></i>{{$t('btn').createGroup}}</li> -->
       <!-- <li class="item flex-sc" @click="getAccountData" :title="$t('title').exportAccount"><i class="el-icon-download icon"></i>{{$t('btn').exportAccount}}</li> -->
-      <li class="item flex-sc" @click="openUrl('/social')" :title="$t('title').exportAccount"><i class="el-icon-circle-plus-outline icon"></i>{{$t('btn').addFriend}}</li>
-      <li class="item flex-sc" @click="openUrl('/set')" :title="$t('btn').set"><i class="el-icon-setting icon"></i>{{$t('btn').set}}</li>
+      <!-- <li class="item flex-sc" @click="openUrl('/social')" :title="$t('title').exportAccount"><i class="el-icon-circle-plus-outline icon"></i>{{$t('btn').addFriend}}</li> -->
+      <!-- <li class="item flex-sc" @click="openUrl('/set')" :title="$t('btn').set"><i class="el-icon-setting icon"></i>{{$t('btn').set}}</li> -->
     </ul>
-    <set-enode class="mt-20" :class="nodeClass ? 'set-node-box' : ''" :isSetNode="false"></set-enode>
+    <!-- <set-enode class="mt-20" :class="nodeClass ? 'set-node-box' : ''" :isSetNode="false"></set-enode> -->
 
 
     <el-dialog :title="$t('btn').exportAccount" :visible.sync="eDialog.export" width="300px" :before-close="closeDrawer"  :close-on-click-modal="false" :modal-append-to-body='false'>
